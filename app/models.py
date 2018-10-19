@@ -16,9 +16,6 @@ class Stock(object):
     def getPrice(self):
         return self.price
 
-# class Furnitures(models.Model):
-#     pictures = models.ImageField(upload_to = image_directory_path, storage = image_storage )
-
 class Furniture(object):
     def __init__(self, name):
         self.name = name
@@ -35,19 +32,3 @@ class Furniture(object):
     def getHeigth(self):
         return self.heigth
 
-
-IMAGE_STORAGE = FileSystemStorage(
-    # Physical file location ROOT
-    location=u'{0}/images/'.format(settings.MEDIA_ROOT),
-    # Url for file
-    base_url=u'{0}images/'.format(settings.MEDIA_URL),
-)
-
-
-def image_directory_path(instance, filename):
-    # file will be uploaded to MEDIA_ROOT/my_sell/picture/<filename>
-    return u'picture/{0}'.format(filename)
-
-
-class Goods(models.Model):
-    pic = models.ImageField(upload_to=image_directory_path, storage=IMAGE_STORAGE)
