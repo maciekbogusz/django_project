@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from lxml import html
 import requests
-from app.models import Stock
+from app.models import Stock, Furniture, Goods
 # Create your views here.
 
 def get_data(stock):
@@ -24,6 +24,13 @@ class AboutPageView(TemplateView):
 
 class FoodPageView(TemplateView):
         template_name = "food.html"
+
+class MovingView(TemplateView):
+        def get(self, request, **kwargs):
+         c = dict()
+         c['goods'] = Goods.objects.all()
+         return render(request, 'moving.html', c)
+        
 
 class StockCheckerPageView(TemplateView):
         def get(self, request, **kwargs):
