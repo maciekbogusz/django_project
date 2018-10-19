@@ -38,8 +38,9 @@ function drop(ev) {
 <br>
 <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
     {% load static %}
-    <img id="drag1" draggable="true" ondragstart="drag(event)" src="{% static "komoda.png" %}" %"> 
-
+    {% for keys, values in images.items %}
+    <img id="drag1" draggable="true" ondragstart="drag(event)" src="{% static "{{values}}" %}" %"> 
+    {% endfor %}
 </div>
 
 </br>

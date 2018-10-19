@@ -1,9 +1,10 @@
+import os
+from django.conf import settings
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from lxml import html
 import requests
 from app.models import Stock
-# Create your views here.
 
 def get_data(stock):
     lower_index = stock.name.lower()
@@ -26,9 +27,16 @@ class FoodPageView(TemplateView):
     template_name = "food.html"
 
 class MovingView(TemplateView):
-    
-    
-    template_name = "moving.html"
+    def get(self, request, **kwargs):
+        image_list = []
+        static_dirs = settings.STATICFILES_DIRS
+        for directory in static_dirs:
+            for file in os.listdir(directory):
+                if file.endswith(".png"):
+                    image_list.append(file)      
+        dict_of_images = {i: image_list[i] for i in range(0, len(image_list))}
+        return render(request, 'moving.html', dict_of_images)
+
 
 class StockCheckerPageView(TemplateView):
     def get(self, request, **kwargs):
