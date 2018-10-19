@@ -26,6 +26,8 @@ class FoodPageView(TemplateView):
     template_name = "food.html"
 
 class MovingView(TemplateView):
+    
+    
     template_name = "moving.html"
 
 class StockCheckerPageView(TemplateView):
