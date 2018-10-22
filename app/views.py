@@ -28,14 +28,18 @@ class FoodPageView(TemplateView):
 
 class MovingView(TemplateView):
     def get(self, request, **kwargs):
+        image_list = self.get_images()      
+        dict_of_images = {i: image_list[i] for i in range(0, len(image_list))}
+        return render(request, 'moving.html', {'content': dict_of_images})
+
+    def get_images(self):
         image_list = []
         static_dirs = settings.STATICFILES_DIRS
         for directory in static_dirs:
             for file in os.listdir(directory):
                 if file.endswith(".png"):
                     image_list.append(file)      
-        dict_of_images = {i: image_list[i] for i in range(0, len(image_list))}
-        return render(request, 'moving.html', {'content': dict_of_images})
+        return image_list
 
 
 class StockCheckerPageView(TemplateView):
