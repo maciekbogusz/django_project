@@ -3,49 +3,57 @@
 <html>
 <head>
 <style>
-#div1 {
-    width: 400px;
-    height: 400px;
-    padding: 10px;
-    border: 1px solid #aaaaaa;
+table th, table td {
+    width: 200px;
+    height:70px;
 }
-#div2 {
-    width: 1000px;
-    height: 400px;
-    padding: 10px;
-    border: 1px solid #aaaaaa;
+table span {
+    display:block;
+    background-color: #ccc;
+    border: 1px solid black;
+    color: fff;
+    height: 30px;
+    width: 100%;
 }
 </style>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-function allowDrop(ev) {
-    ev.preventDefault();
-}
+$(document).ready(function () {
+    $('.event').on("dragstart", function (event) {
+        var dt = event.originalEvent.dataTransfer;
+        dt.setData('Text', $(this).attr('id'));
+    });
+    $('table td').on("dragenter dragover drop", function (event) {
+        event.preventDefault();
+        if (event.type === 'drop') {
+            var data = event.originalEvent.dataTransfer.getData('Text', $(this).attr('id'));
+            de = $('#' + data).detach();
+            de.appendTo($(this));
 
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-}
+        };
+    });
+})
 </script>
+
 </head>
 <body>
 <p></p>
-<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-<br>
-<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+<table id="#our_table" border="1">
+    <tr>
+        <th>Elements to reansport</th>
+        <th>Elements</th>
+    </tr>
+    <tr>
+    <td>
+    <td>
     {% load static %}
-    {% for keys, values in images.items %}
-    <img id="drag1" draggable="true" ondragstart="drag(event)" src="{% static "{{values}}" %}" %"> 
-    {% endfor %}
-</div>
-
-</br>
+    {% for keys, values in content.items %}
+    <img class="event" id="item{{ forloop.counter }}" draggable="true" src="{% static values %}" >
+    {% endfor %}  
+    </td>
+    </tr>
+</table>
 </body>
 
 </html>
-
-<a href="/">Go back home</a>
