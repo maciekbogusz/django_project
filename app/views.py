@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from lxml import html
 import requests
-from app.models import Stock
+from app.models import Stock, Furniture
 
 def get_data(stock):
     lower_index = stock.name.lower()
@@ -26,22 +26,13 @@ class AboutPageView(TemplateView):
 class FoodPageView(TemplateView):
     template_name = "food.html"
 
-class MovingView(TemplateView):
+class MovingView(TemplateView):   
     def get(self, request, **kwargs):
-        image_list = self.get_images()      
+        furntiure = Furniture()
+        image_list = furntiure.get_images()      
         dict_of_images = {i: image_list[i] for i in range(0, len(image_list))}
         return render(request, 'moving.html', {'content': dict_of_images})
-
-    def get_images(self):
-        image_list = []
-        static_dirs = settings.STATICFILES_DIRS
-        for directory in static_dirs:
-            for file in os.listdir(directory):
-                if file.endswith(".png"):
-                    image_list.append(file)      
-        return image_list
-
-
+        
 class StockCheckerPageView(TemplateView):
     def get(self, request, **kwargs):
         my_stocks = {'PXM':None, 'NTT':None, 'ABC':None, 'BIO':None, 'CDR':None} 

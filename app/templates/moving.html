@@ -4,7 +4,7 @@
 <head>
 <style>
 table th, table td {
-    width: 250px;
+    width: 400px;
     height:70px;
 }
 table span {
@@ -35,25 +35,26 @@ $(document).ready(function () {
     });
 })
 </script>
-
 </head>
 <body>
 <p><a href="/">Main page</a></p>
-<table id="#our_table" border="1">
+<table id="headers" border="1">
     <tr>
         <th>Elements to reansport</th>
         <th>Elements</th>
     </tr>
+</table>
+<table border="1" id="table_of_elements"> 
     <tr>
-    <td>
-    <td>
-    {% load static %}
-    {% for keys, values in content.items %}
-    <img class="event" id="item{{ forloop.counter }}" draggable="true" src="{% static values %}" >
-    {% endfor %}  
-    </td>
+        <td id="elements_to_transport"></td>
+        <td id="elements">
+            {% load static %}
+            {% for keys, values in content.items %}
+            <img class="event" id="item{{ forloop.counter }}" draggable="true" src="{% static values %}" >
+            {% endfor %}  
+        </td>
     </tr>
 </table>
-</body>
 
+</body>
 </html>
