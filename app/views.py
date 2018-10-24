@@ -32,7 +32,10 @@ class MovingView(TemplateView):
         image_list = furntiure.get_images()      
         dict_of_images = {i: image_list[i] for i in range(0, len(image_list))}
         return render(request, 'moving.html', {'content': dict_of_images})
-        
+    
+    def getDataFromTable(self, request):
+        print(request.POST)
+                
 class StockCheckerPageView(TemplateView):
     def get(self, request, **kwargs):
         my_stocks = {'PXM':None, 'NTT':None, 'ABC':None, 'BIO':None, 'CDR':None} 

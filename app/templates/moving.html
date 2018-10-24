@@ -15,6 +15,7 @@ table span {
     height: 100%;
     width: 100%;
 }
+
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -34,6 +35,11 @@ $(document).ready(function () {
         };
     });
 })
+function GetColumnValues() {
+        var table = document.getElementById("elements_to_transport");
+        var element = table.innerHTML;
+        $.post(element)
+}        
 </script>
 </head>
 <body>
@@ -46,15 +52,16 @@ $(document).ready(function () {
 </table>
 <table border="1" id="table_of_elements"> 
     <tr>
-        <td id="elements_to_transport"></td>
-        <td id="elements">
+        <td id="elements_to_transport" class="new">  
+        </td>
+        <td id="elements" class="name">
             {% load static %}
             {% for keys, values in content.items %}
-            <img class="event" id="item{{ forloop.counter }}" draggable="true" src="{% static values %}" >
+                        <img class="event" id="item{{ forloop.counter }}" draggable="true" src="{% static values %}" >
             {% endfor %}  
         </td>
     </tr>
 </table>
-
+<button id="button" onclick="GetColumnValues()">Select elements to transport</button>    
 </body>
 </html>
