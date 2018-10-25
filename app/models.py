@@ -12,8 +12,6 @@ class Stock(object):
     def get_price(self):
         return self.price
     
-    
-    
 class Furniture(object): 
     def get_images(self):
         image_list = []
