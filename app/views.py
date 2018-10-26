@@ -3,7 +3,10 @@ from django.views.generic import TemplateView
 import requests
 from lxml import html
 from app.models import Stock, Furniture
-
+from django.http import HttpResponseRedirect
+from .forms import NameForm
+from django.views.decorators.csrf import csrf_protect
+from django.utils.decorators import method_decorator
 
 def get_data(stock):
     lower_index = stock.name.lower()
@@ -38,13 +41,22 @@ class MovingView(TemplateView):
         furntiure = Furniture()
         image_list = furntiure.get_images()      
         dict_of_images = {i: image_list[i] for i in range(0, len(image_list))}
-        return render(request, 'moving.html', {'content': dict_of_images})
-
-    def get_data_from_table(self, request):
-        pass             
+        return render(request, 'moving.html', {'content': dict_of_images})    
 
 class StockCheckerPageView(TemplateView):
     def get(self, request, **kwargs):
         my_stocks = {'PXM':None, 'NTT':None, 'ABC':None, 'BIO':None, 'CDR':None} 
         result = get_prices(my_stocks)
         return render(request, 'stock.html', { 'content': result})
+
+class FormView(TemplateView):
+    @method_decorator(csrf_protect)
+    def get_name(self, request):
+        if request.method == 'POST':
+            form = NameForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/thanks/')
+        else:
+            form = NameForm()
+        return render(request, 'name.html', {'form': form})
+    template_name = "forms.html"

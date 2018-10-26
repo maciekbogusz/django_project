@@ -1,6 +1,11 @@
 <!-- howdy/templates/index.html -->
 <!DOCTYPE html>
 <html>
+        {% csrf_token %}
+        <script type="text/javascript">
+        // using jQuery
+        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+        </script>
     <head>
         <meta charset="utf-8">
         <title>Howdy!</title>
@@ -11,5 +16,7 @@
         <a href="/food">Food</a><br>
         <a href="/stock">Stock Checker</a><br>
         <a href="/moving">Moving</a><br>
+        <a href="/form">Form</a><br>
+        <html></html>         
     </body>
 </html>

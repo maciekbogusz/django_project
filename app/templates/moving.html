@@ -15,12 +15,11 @@ table span {
     height: 100%;
     width: 100%;
 }
-
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-$(document).ready(function () {
+$(document).ready(function drag_item() {
     $('.event').on("dragstart", function (event) {
         var dt = event.originalEvent.dataTransfer;
         dt.setData('Text', $(this).attr('id'));
@@ -31,14 +30,17 @@ $(document).ready(function () {
             var data = event.originalEvent.dataTransfer.getData('Text', $(this).attr('id'));
             de = $('#' + data).detach();
             de.appendTo($(this));
-
         };
     });
 })
 function GetColumnValues() {
         var table = document.getElementById("elements_to_transport");
         var element = table.innerHTML;
-        $.post(element)
+        if (element != null) {
+            $.post(element);
+        } else {
+            alert("No element selected");
+        }
 }        
 </script>
 </head>
@@ -52,9 +54,9 @@ function GetColumnValues() {
 </table>
 <table border="1" id="table_of_elements"> 
     <tr>
-        <td id="elements_to_transport" class="new">  
+        <td id="elements_to_transport" >  
         </td>
-        <td id="elements" class="name">
+        <td id="elements">
             {% load static %}
             {% for keys, values in content.items %}
                         <img class="event" id="item{{ forloop.counter }}" draggable="true" src="{% static values %}" >
@@ -62,6 +64,6 @@ function GetColumnValues() {
         </td>
     </tr>
 </table>
-<button id="button" onclick="GetColumnValues()">Select elements to transport</button>    
+<button action="button" onclick="GetColumnValues()">Select elements to transport</button>    
 </body>
 </html>
